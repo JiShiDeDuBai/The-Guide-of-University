@@ -1,0 +1,406 @@
+body {
+    background-color: #f2f2f2;
+    font-family: Lato;
+    font-weight: 300;
+    font-size: 16px;
+    color: #555;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: Raleway;
+    font-weight: 300;
+    color: #333;
+}
+
+.centered {
+    text-align: center;
+}
+.goright {
+    text-align: right;
+}
+.mt {
+    padding-top: 25px;
+}
+
+a:hover, a:focus {
+    color: #7b7b7b;
+    text-decoration: none;
+    outline: 0;
+}
+a:before, a:after {
+    -webkit-transition: color .1s ease-in, background .1s ease-in;
+    -moz-transition: color .1s ease-in, background .1s ease-in;
+    -ms-transition: color .1s ease-in, background .1s ease-in;
+    -o-transition: color .1s ease-in, background .1s ease-in;
+    transition: color .1s ease-in, background .1s ease-in;
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+.btn {
+    border-radius: 0;
+}
+.btn-green {
+    color: #fff;
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    font-weight: 300;
+}
+.btn-green:hover, .btn-green:focus, .btn-green:active, .btn-green.active, .open .dropdown-toggle.btn-green {
+    color: #fff;
+    background-color: #16a085;
+    border-color: #16a085;
+    font-weight: 300;
+}
+.tm {
+    font-size: 14px;
+    line-height: 20px;
+}
+.copyrights{
+	text-indent:-9999px;
+	height:0;
+	line-height:0;
+	font-size:0;
+	overflow:hidden;
+}
+.menu {
+    position: fixed;
+    right: -200px;
+    width: 260px;
+    height: 61.8%;
+    top: 0;
+    z-index: 10;
+    text-align: left;
+}
+.menu.menu-open {
+    right: 0;
+}
+.menu-wrap {
+      position: absolute;
+    top: 0;
+    left: 60px;
+    background: #1a1a1a;
+    width: 200px;
+    height:516px;
+    border-radius:25px;
+    border:2px solid;
+}
+.menu h1.logo a {
+    font-family: Raleway, Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: .15em;
+    line-height: 40px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-top: 20px;
+}
+.menu h1.logo a:hover {
+    color: #1abc9c;
+}
+.menu img.logo {
+    margin: 20px 0;
+    max-width: 160px;
+}
+.menu a {
+    margin-left: 20px;
+    color: gray;
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 40px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+#viewDiv{
+	position:absolute;
+	top:0px;
+	bottom:0;
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+	z-index:-1;
+	}
+	#body,html{
+      margin:0;
+	  padding:0;
+	  height:100%;
+	  width:100%;
+	  overflow:hidden;
+	  display: block;
+	}
+.menu a:hover {
+    color: #fff;
+}
+.menu a:active {
+    color: #fff;
+}
+.menu a>i {
+    float: left;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    width: 25px;
+    font-size: 14px;
+    line-height: 40px;
+    margin: 25px 2px;
+}
+.menu-close {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    font-size: 14px;
+    color: gray;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    top: 20px;
+    right: 5px;
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+}
+.menu-close:hover {
+    color: #fff;
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+}
+.body-push {
+    overflow-x: hidden;
+    position: relative;
+    left: 0;
+}
+.body-push-toright {
+    left: 200px;
+}
+.body-push-toleft {
+    left: -200px;
+}
+.menu, .body-push {
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+#menuToggle {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 11;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, .25);
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+    border:2px solid;
+    border-radius:25px;
+}
+#menuToggle:hover {
+    color: #fff;
+    background: rgba(0, 0, 0, .2);
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+}
+#QuerySchooldiv {
+    position: absolute;
+    height: 80px;
+    width: 550px;
+    top: 0%;
+    right: 20%;
+    font-size: 20px;
+    text-align: center;
+    border:2px solid;
+    border-radius:25px;
+    background-color:whitesmoke;
+}
+select {
+    font-size: 16px;
+}
+input{
+    font-size: 16px;
+}
+/* 查询分数线的表格*/
+.lin-searchnav{
+    position: fixed;
+    bottom:0px;
+    left:0%;
+    width: 1500px;
+    height: 270px;
+    z-index: 10;
+    text-align:left;
+    background-color:whitesmoke;
+}
+.lin-searchnav .lin-searchnav-box {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+.lin-searchnav .lin-searchnav-box .bd-bottom {
+    width: 100%;
+    
+}
+.lin-searchnav .lin-searchnav-box .lin-ul {
+    width: 1200px;
+    height: 54px;
+    margin: 0 auto;
+   
+}
+.lin-searchnav .lin-searchnav-box .lin-ul li.lin-senav-active {
+    color: #0592dc;
+}
+.lin-searchnav .lin-searchnav-box .lin-ul li {
+    display: block;
+    float: left;
+    font-size: 18px;
+    height: 38px;
+    line-height: 35px;
+    *line-height: 35px;
+    margin-top: 12px;
+    margin-right: 50px;
+    color: #333333;
+    position: relative;
+    cursor: pointer;
+}
+.lin-searchnav .center-box {
+    width: 200px;
+    height: 230px;
+    bottom: 0px;
+    margin-top: 20px;
+    position: fixed;
+}
+#condition {
+    width: 906px;
+    
+    height: 200px;
+   
+    position: relative;
+}
+#condition li {
+    cursor: pointer;
+}
+.listSpan .list-key {
+    float: left;
+    color: #333333;
+    height: 31px;
+    line-height: 25px;
+    width: 70px;
+}
+.listSpan .more-search2 {
+    float: left;
+    width: 806px;
+}
+.listSpan .more-search {
+    float: left;
+    width: 806px;
+}
+.listSpan .more-search3 {
+    float: left;
+    width: 806px;
+}
+.listSpan .more-search4 {
+    float: left;
+    width: 806px;
+}
+.listSpan .more-search span {
+    padding: 0px 20px 8px 0px;
+    color: #666;
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px;
+}
+.listSpan .more-search2 span {
+    padding: 0px 20px 8px 0px;
+    color: #666;
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px;
+}
+.listSpan .more-search3 span {
+    padding: 0px 20px 8px 0px;
+    color: #666;
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px;
+}
+.listSpan .more-search4 span {
+    padding: 0px 20px 8px 0px;
+    color: #666;
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+ol, ul {
+    list-style: none;
+}
+#condition .spanActive {
+    color: #0592dc;
+}
+#querySchoolline{
+    display: none;
+    position: fixed;
+    bottom: 2%;
+    left: 30%;
+}
+#querymajorline{
+    display: none;
+    position: fixed;
+    bottom: 2%;
+    left: 30%;
+}
+.searchMajor{
+    position: fixed;
+    top:0%;
+    left:8%;
+    height: 80px;
+    width:500px;
+    background-color:whitesmoke;
+    border:2px solid;
+    border-radius:25px;
+}
+.inline{
+   margin-top: 20px;
+   margin-left: 30px;
+}
+#myChartDIV{
+    
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+    background-color: whitesmoke;
+    height: 270px;
+    width: 540px;
+    display: block;
+}
+
+
+

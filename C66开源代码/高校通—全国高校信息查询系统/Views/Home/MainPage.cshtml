@@ -1,0 +1,373 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/MainPage.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+    <link href="~/Content/Transport.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <style>
+        .Province li {
+            display: inline-block;
+            list-style-type: none;
+        }
+
+        .Province {
+            list-style-type: none;
+        }
+
+        .Active {
+            color: blue;
+        }
+
+        .Green {
+            color: blue;
+        }
+
+        .MainDIV {
+            border-style: outset;
+        }
+
+        .leftDIV {
+            border-style: outset;
+            width: 500px;
+            height: 500px;
+            float: left;
+        }
+
+        #TableDIV {
+            text-align: center;
+            border-style: outset;
+            width: auto;
+            height: auto;
+            float: left;
+        }
+
+        #SerachMajorLine {
+            display: none;
+            position: fixed;
+        }
+
+        .MajorType {
+            position: fixed;
+            left: 0%;
+            list-style-type: none;
+        }
+
+            .MajorType li {
+                display: inline-block;
+                list-style-type: none;
+            }
+
+        #TableBody {
+            position: fixed;
+            top: 160px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="MainDIV">
+        <div class="leftDIV" style="display:inline-block">
+            <ul class="Province" id="Province">
+                <li class="Active">各省分数线</li>
+                <li class="">大学分数线</li>
+                <li class="">专业分数线</li>
+            </ul>
+            <ul id="condition">
+                <li class="listSpan">
+                    <span class="list-key">所属地区 </span>
+                    <div class="more-search">
+                        <span class="">北京</span>
+                        <span class="">天津</span>
+                        <span class="">河北</span>
+                        <span class="">河南</span>
+                        <span class="">山东</span>
+                        <span class="">山西</span>
+                        <span class="">陕西</span>
+                        <span class="">内蒙古</span>
+                        <span class="">辽宁</span>
+                        <br>
+                        <span class="">吉林</span>
+                        <span class="">黑龙江</span>
+                        <span class="">上海</span>
+                        <span class="">江苏</span>
+                        <span class="">安徽</span>
+                        <span class="">江西</span>
+                        <span class="">湖北</span>
+                        <span class="">湖南</span>
+                        <span class="">重庆</span>
+                        <br>
+                        <span class="Active">四川</span>
+                        <span class="">贵州</span>
+                        <span class="">云南</span>
+                        <span class="">广东</span>
+                        <span class="">浙江</span>
+                        <span class="">广西</span>
+                        <span class="">福建</span>
+                        <span class="">甘肃</span>
+                        <span class="">宁夏</span>
+                        <br>
+                        <span class="">新疆</span>
+                        <span class="">西藏</span>
+                        <span class="">海南</span>
+                        <span class="">青海</span>
+                </li>
+                <li>
+                    <span class="list-key">录取批次 </span>
+                    <div class="more-search2">
+                        <span class="Active">全部</span>
+                        <span class="">本科一批</span>
+                        <span class="">本科二批</span>
+                        <span class="">专科批</span>
+                    </div>
+                </li>
+                <li>
+                    <span class="list-key">考生类别</span>
+                    <div class="more-search3">
+                        <span class="Active">全部</span>
+                        <span class="">文科</span>
+                        <span class="">理科</span>
+                        <span class="">综合</span>
+                    </div>
+                </li>
+                <li>
+                    <span class="list-key">录取年份</span>
+                    <div class="more-search4">
+                        <span class="Active">2019</span>
+                        <span class="">2018</span>
+                        <span class="">2017</span>
+                        <span class="">2016</span>
+                        <span class="">2015</span>
+                    </div>
+                </li>
+            </ul>
+            <div id="SerachMajorLine">
+                <span>输入专业名:</span>
+                <input type="text" name="MajorName" id="MajorName">
+                <input type="button" value="查询">
+                <ul class="MajorType" id="MajorType">
+                    <li class="Green">工学</li>
+                    <li class="">经济学</li>
+                    <li class="">管理学</li>
+                    <li class="">文学</li>
+                    <li class="">医学</li>
+                    <li class="">理学</li>
+                    <li class="">法学</li>
+                    <li class="">教育学</li>
+                    <li class="">艺术</li>
+                </ul>
+
+                <ul id="TableBody"></ul>
+            </div>
+        </div>
+        <div id="TableDIV" style="display: inline">
+            <table id="tab_Test0" width='1500' cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr class='tabTh' id="tabTh"></tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        // 选择类型.Province
+        var liProvince = document.querySelectorAll('.Province li')
+        for (var i = 0; i < liProvince.length; i++) {
+            liProvince[i].onclick = function () {
+                for (var j = 0; j < liProvince.length; j++) {
+                    liProvince[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择省份more-search
+        var Province = document.querySelectorAll('.more-search span')
+        for (var i = 0; i < Province.length; i++) {
+            Province[i].onclick = function () {
+                for (var j = 0; j < Province.length; j++) {
+                    Province[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择文理科more-search2
+        var wenlike = document.querySelectorAll('.more-search2 span')
+        for (var i = 0; i < wenlike.length; i++) {
+            wenlike[i].onclick = function () {
+                for (var j = 0; j < wenlike.length; j++) {
+                    wenlike[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择考生类别more-search3
+        var Stype = document.querySelectorAll('.more-search3 span')
+        for (var i = 0; i < Stype.length; i++) {
+            Stype[i].onclick = function () {
+                for (var j = 0; j < Stype.length; j++) {
+                    Stype[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择年份more-search4
+        var Year = document.querySelectorAll('.more-search4 span')
+        for (var i = 0; i < Year.length; i++) {
+            Year[i].onclick = function () {
+                for (var j = 0; j < Year.length; j++) {
+                    Year[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+
+        //各热门专业 10 强
+        //1.工学
+        var Engineering = ["土木工程", "机械设计制造及其自动化",
+            "电器工程及其自动化", "电子信息工程", "计算机科学与技术",
+            "通信工程", "自动化", "建筑学", "车辆工程", "软件工程"];
+        //2.经济学
+        var Economics = ["金融学", "国际经济与贸易", "经济学",
+            "财政学", "金融工程", "投资学", "贸易经济", "经济统计学",
+            "信用管理", "国民经济管理"]
+        //3.管理学
+        var Management = ["会计学", "工商管理", "财务管理",
+            "信息管理与信息系统", "市场营销", "工程管理", "人力资源管理",
+            "物流管理", "旅游管理", "公共事业管理"]
+        //4.文学类
+        var Literature = ["英语", "汉语言文学", "新闻学", "广告学",
+            "日语", "法语", "传播学", "编辑出版学", "德语", "翻译"]
+        //5.医学类
+        var Medical_Science = ["临床医学", "护理学", "药学", "中医学",
+            "口腔医学", "医学影像学", "预防医学", "中西医临床医学", "麻醉学",
+            "针灸推拿学"]
+        //6.理学
+        var Neo_Confucianism = ["信息与计算科学", "数学与应用数学", "应用化学",
+            "生物技术", "生物科学", "应用物理学", "应用心理学",
+            "统计学", "化学", "物理学"]
+        //7.法学类
+        var Law = ["法学", "社会工作", "社会学", "政治学与行政学",
+            "国际政治", "思想政治教育", "侦查学", "外交学", "公安情报学", "治安学"]
+        //8.教育学
+        var Education = ["教育技术学", "教育学", "学前教育", "小学教育",
+            "科学教育", "体育教育", "艺术教育", "特殊教育", "人文教育", "运动人体科学"]
+        //9.艺术类
+        var Arts = ["雕塑", "数字媒体艺术", "美术学", "广播电视编导",
+            "艺术设计学", "播音与艺术主持", "动画", "音乐学", "绘画", "戏剧影视文化"]
+
+        //二维数组，存放所有专业
+        var Count = [Engineering, Economics, Management, Literature,
+            Medical_Science, Neo_Confucianism, Law, Education, Arts]
+        var Counts = ["工学", "经济学", "管理学", "文学", "医学", "理学", "法学", "教育学", "艺术"]
+        //获得所有已选择的值
+        function getValue() {
+            var temp = []//用来存放所有值的数组
+            //从点击栏中，选出所有有颜色的Dom(即为选中的Dom)，将他们的值依次存入数组
+            var value = document.querySelectorAll('.Active');
+            for (var i = 0; i < value.length; i++) {
+                temp[i] = value[i].innerHTML;
+            }
+            var htmls = ""
+            var Form = document.getElementById("condition");
+            var SerachMajorLineDiv = document.getElementById("SerachMajorLine");
+            
+            if (temp[0] == "各省分数线") {  
+                //Transport_ProLine(temp) //调用JS方法，从后端传省线数据到界面
+                Form.style.display = "block"
+                SerachMajorLineDiv.style.display = "none"                
+                htmls += "<th width='100px'>地区</th>"
+                htmls += "<th width='100px'>年份</th>"
+                htmls += "<th width='100px'>考生类别</th>"
+                htmls += "<th width='100px'>批次</th>"
+                htmls += "<th width='100px'>分数线</th>"
+                document.getElementById("tabTh").innerHTML = htmls;
+                Transport_ProLine(temp) //调用JS方法，从后端传省线数据到界面
+                
+            } else if (temp[0] == "大学分数线") {   
+                Form.style.display = "block"
+                SerachMajorLineDiv.style.display = "none"
+                var dataTable = $('#tab_Test0').dataTable();
+                if (dataTable) {
+                    dataTable.fnClearTable(); //清空数据
+                    dataTable.fnDestroy(); //销毁datatable
+                }
+                htmls += "<th width='120px'>学校名称</th>"
+                htmls += "<th width='75px'>招生地址</th>"
+                htmls += "<th width='75px'>考生类别</th>"
+                htmls += "<th width='50px'>年份</th>"
+                htmls += "<th width='120px'>录取批次</th>"
+                htmls += "<th width='50px'>平均分</th>"
+                htmls += "<th width='50px'>最低分</th>"
+                htmls += "<th width='50px'>省控线</th>"
+                document.getElementById("tabTh").innerHTML = htmls;
+                Transport_UniversityLine(temp)               
+            } else if (temp[0] == "专业分数线") {
+                Form.style.display = "none"
+                SerachMajorLineDiv.style.display = "block"
+                htmls += "<td width='100px'>学校名称</td>"
+                htmls += "<td width='150px'>专业名称</td>"
+                htmls += "<td width='100px'>招生地址</td>"
+                htmls += "<td width='100px'>考生类别</td>"
+                htmls += "<td width='100px'>年份</td>"
+                htmls += "<td width='100px'>录取批次</td>"
+                htmls += "<td width='100px'>平均分</td>"
+                htmls += "<td width='100px'>最低分</td>"
+                document.getElementById("tabTh").innerHTML = htmls;
+            }
+            
+        }
+
+        // function 将热门专业都加载都表中
+        function GetMajor(OneOfMajorTypes) {
+            var Tbody = document.getElementById("TableBody");
+            var HTMLS = "";
+            for (var i = 0; i < OneOfMajorTypes.length; i++) {
+                HTMLS += "<li width='100px'>" + OneOfMajorTypes[i] + "</li>"
+            }
+            return HTMLS;
+        }
+
+        //给MajorType每个注册点击事件
+        var MajorTypes = document.querySelectorAll('.MajorType li')
+
+        for (var i = 0; i < MajorTypes.length; i++) {
+            MajorTypes[i].onclick = function () {
+                for (var j = 0; j < MajorTypes.length; j++) {
+                    MajorTypes[j].className = ''
+                    this.className = "Green"
+                }
+                //将HTMLS添加到TableBody中
+                for (var k = 0; k < Counts.length; k++) {
+                    if (this.innerHTML == Counts[k]) {
+                        document.getElementById("TableBody").innerHTML = GetMajor(Count[k]);
+                    }
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

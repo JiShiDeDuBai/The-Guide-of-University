@@ -1,0 +1,212 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>数据传输测试</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/Transport.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <link href="~/Content/Transport.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+
+</head>
+
+<body>
+
+    <div>
+        <input id="universityName" type="text" placeholder="输入院校名称" />
+        <input type="button" value="查询" id="btnTest">
+    </div>
+    <div class="search-table">
+        <table id="example" class="dataTable" cellspacing="0">
+            <thead>
+                <tr id="tableHead">
+                    <th>学校名称</th>
+                    <th>招生地址</th>
+                    <th>考生类别</th>
+                    <th>年份</th>
+                    <th>录取批次</th>
+                    <th>平均分</th>
+                    <th>最低分</th>
+                    <th>省控线</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+    <div>
+        <button id="btnPro" value="四川">四川</button>
+        <button id="btnBatch" value="全部">全部</button>
+        <button id="btnStuType" value="全部">全部</button>
+        <button id="btnYear" value="2016">2016</button>
+    </div>
+    <div class="search-table-proline">
+        <table class="table-proline" cellspacing="0">
+            <thead>
+                <tr id="tableHead">
+                    <th>地区</th>
+                    <th>年份</th>
+                    <th>考生类别</th>
+                    <th>批次</th>
+                    <th>分数线</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody-proLine"></tbody>
+        </table>
+    </div>
+
+    <ul class="Province" id="Province">
+        <li class="Active">各省分数线</li>
+        <li class="">大学分数线</li>
+        <li class="">专业分数线</li>
+    </ul>
+    <ul id="condition">
+        <li class="listSpan">
+            <span class="list-key">所属地区 </span>
+            <div class="more-search">
+                <span class="">北京</span>
+                <span class="">天津</span>
+                <span class="">河北</span>
+                <span class="">河南</span>
+                <span class="">山东</span>
+                <span class="">山西</span>
+                <span class="">陕西</span>
+                <span class="">内蒙古</span>
+                <span class="">辽宁</span>
+                <span class="">吉林</span>
+                <span class="">黑龙江</span>
+                <span class="">上海</span>
+                <span class="">江苏</span>
+                <span class="">安徽</span>
+                <span class="">江西</span>
+                <span class="">湖北</span>
+                <span class="">湖南</span>
+                <span class="">重庆</span>
+                <span class="Active">四川</span>
+                <span class="">贵州</span>
+                <span class="">云南</span>
+                <span class="">广东</span>
+                <span class="">浙江</span>
+                <span class="">广西</span>
+                <span class="">福建</span>
+                <span class="">甘肃</span>
+                <span class="">宁夏</span>
+                <span class="">新疆</span>
+                <span class="">西藏</span>
+                <span class="">海南</span>
+                <span class="">青海</span>
+        </li>
+        <li>
+            <span class="list-key">录取批次 </span>
+            <div class="more-search2">
+                <span class="Active">全部</span>
+                <span class="">本科一批</span>
+                <span class="">本科二批</span>
+                <span class="">专科批</span>
+            </div>
+        </li>
+        <li>
+            <span class="list-key">考生类别</span>
+            <div class="more-search3">
+                <span class="Active">全部</span>
+                <span class="">文科</span>
+                <span class="">理科</span>
+                <span class="">综合</span>
+            </div>
+        </li>
+        <li>
+            <span class="list-key">录取年份</span>
+            <div class="more-search4">
+                <span class="Active">2019</span>
+                <span class="">2018</span>
+                <span class="">2017</span>
+                <span class="">2016</span>
+                <span class="">2015</span>
+            </div>
+        </li>
+    </ul>
+    <script>
+        // 选择类型.Province
+        var liProvince = document.querySelectorAll('.Province li')
+        for (var i = 0; i < liProvince.length; i++) {
+            liProvince[i].onclick = function () {
+                for (var j = 0; j < liProvince.length; j++) {
+                    liProvince[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择省份more-search
+        var Province = document.querySelectorAll('.more-search span')
+        for (var i = 0; i < Province.length; i++) {
+            Province[i].onclick = function () {
+                for (var j = 0; j < Province.length; j++) {
+                    Province[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择文理科more-search2
+        var wenlike = document.querySelectorAll('.more-search2 span')
+        for (var i = 0; i < wenlike.length; i++) {
+            wenlike[i].onclick = function () {
+                for (var j = 0; j < wenlike.length; j++) {
+                    wenlike[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择考生类别more-search3
+        var Stype = document.querySelectorAll('.more-search3 span')
+        for (var i = 0; i < Stype.length; i++) {
+            Stype[i].onclick = function () {
+                for (var j = 0; j < Stype.length; j++) {
+                    Stype[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+        //选择年份more-search4
+        var Year = document.querySelectorAll('.more-search4 span')
+        for (var i = 0; i < Year.length; i++) {
+            Year[i].onclick = function () {
+                for (var j = 0; j < Year.length; j++) {
+                    Year[j].className = ''
+                    this.className = "Active"
+                }
+                getValue()
+            }
+        }
+
+        //获得所有已选择的值
+        function getValue() {
+            var temp = []//用来存放所有值的数组
+            var value = document.querySelectorAll('.Active');
+            for (var i = 0; i < value.length; i++) {
+                temp[i] = value[i].innerHTML;
+            }
+            //将结果打印在console上
+            for (var i = 0; i < temp.length; i++) {
+                console.log(temp[i])                
+            }
+
+            Transport_ProLine(temp) //调用传输省线的方法
+        }
+
+                //将所有结果打印出来
+    </script>
+
+</body>
+</html>

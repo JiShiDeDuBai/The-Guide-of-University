@@ -1,0 +1,24 @@
+﻿$(document).ready(function () {
+    $("#btn1").click(function () {
+        // var data = "";
+        //var name = $("#txtName").val();
+        // var age = $("#txtAge").val();
+        // data += "&Name=" + encodeURI(name);
+        // data += "&Age=" + encodeURI(age);
+        $.ajax({
+            async: true,
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            data: { "Name": $("#userName").val(), "age": $("#passWord").val() },
+            type: "post",
+            datatype: "JSON",
+            url: "/Login/AddUsers",
+            success: function (result) {
+                $("#display").text(result);
+            },
+            error: function (result) {
+                $("#display").html("error");
+            },
+        })
+    });
+})

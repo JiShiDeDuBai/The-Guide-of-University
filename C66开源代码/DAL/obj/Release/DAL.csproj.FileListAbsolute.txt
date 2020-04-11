@@ -1,0 +1,9 @@
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\bin\Release\DAL.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\bin\Release\DAL.pdb
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\bin\Release\Npgsql.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\bin\Release\Mono.Security.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\obj\Release\DAL.csprojAssemblyReference.cache
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\obj\Release\DAL.csproj.CopyComplete
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\obj\Release\DAL.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\DAL\obj\Release\DAL.pdb

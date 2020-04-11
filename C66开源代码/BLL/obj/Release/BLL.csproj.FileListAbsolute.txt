@@ -1,0 +1,11 @@
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\bin\Release\BLL.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\bin\Release\BLL.pdb
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\bin\Release\DAL.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\bin\Release\Npgsql.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\bin\Release\Mono.Security.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\bin\Release\DAL.pdb
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\obj\Release\BLL.csprojAssemblyReference.cache
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\obj\Release\BLL.csproj.CoreCompileInputs.cache
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\obj\Release\BLL.csproj.CopyComplete
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\obj\Release\BLL.dll
+E:\Esri开发竞赛\code\高校通—全国高校信息查询系统\BLL\obj\Release\BLL.pdb

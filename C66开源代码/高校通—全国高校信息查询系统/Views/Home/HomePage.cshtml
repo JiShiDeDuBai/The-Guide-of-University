@@ -1,0 +1,1565 @@
+﻿@{ 
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>高校指南</title>
+    <link rel="icon" href="~/Content/global.icon" type="image/x-icon" />
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/Transport.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/Transport.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/themes/light/main.css" />
+    <link rel="stylesheet" href="~/Content/C1.css"/>
+
+    <script src="https://js.arcgis.com/4.12/"></script>
+    <style>
+        .Active_Special {
+            color: blue;
+        }
+
+        .SpecialLineDIV {
+            display: none;
+            position: absolute;
+            top: 220px;
+            right: 0;
+            display: none;
+            background-color: #f44336;
+            box-shadow: 10px 10px 5px grey;
+            border: rgb(10, 7, 7);
+            border: 8px;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            width: 300px;
+            height: 390px;
+        }
+
+        #TableDIV2 {
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            text-align: center;
+            border-style: outset;
+            width: auto;
+            height: auto;
+            float: left;
+            display: none;
+           z-index:999;
+        }
+    </style>
+    <script>
+        require([
+
+            "esri/Map",
+            "esri/layers/MapImageLayer",
+            "esri/views/MapView",
+            "esri/layers/FeatureLayer",
+            "esri/widgets/Search",
+            "esri/widgets/Search/SearchSource",
+            "esri/widgets/FeatureTemplates",
+            "esri/Graphic",
+            "esri/widgets/Home",
+            "esri/layers/GraphicsLayer",
+            "esri/geometry/Point",
+            "esri/symbols/SimpleFillSymbol",
+            "esri/symbols/SimpleLineSymbol",
+            "esri/symbols/SimpleMarkerSymbol",
+            "esri/Color",
+            "esri/tasks/support/Query",
+            "esri/tasks/QueryTask",
+            "esri/widgets/Feature",
+            "esri/geometry/geometryEngine",
+            "esri/widgets/Sketch",
+            "esri/tasks/IdentifyTask",
+            "esri/tasks/support/IdentifyParameters",
+            "esri/geometry/Polyline"
+
+        ], function (Map,
+            MapImageLayer,
+            MapView,
+            FeatureLayer,
+            Search,
+            SearchSource,
+            FeatureTemplates,
+            Graphic,
+            Home,
+            GraphicsLayer,
+            Point,
+            SimpleFillSymbol,
+            SimpleLineSymbol,
+            SimpleMarkerSymbol,
+            Color,
+            Query,
+            QueryTask,
+            Feature,
+            geometryEngine,
+            Sketch,
+            IdentifyTask,
+            IdentifyParameters,
+            Polyline
+        ) {
+                var template = {
+                    title: "{学校名}",
+                    actions: [
+                        {
+                            id: "find-detalis",
+                            image: "search.jpg",
+                            title: "去官网"
+                        },
+                        {
+                            id: "measuredistance",
+                            image: "https://developers.arcgis.com/javascript/latest/sample-code/popup-actions/live/Measure_Distance16.png",
+                            title: "算距离"
+                        }
+                    ],
+                    content: [{
+                        type: "fields",
+                        fieldInfos: [{
+                            fieldName: "学校名",
+                            label: "名称",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "级别",
+                            label: "级别",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "类别",
+                            label: "类别",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "隶属",
+                            label: "隶属",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "地址",
+                            label: "地址",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "省份",
+                            label: "所在省份",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "城市",
+                            label: "所在城市",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "学校简",
+                            label: "学校简称",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "学校官",
+                            label: "学校官网",
+                            visible: false,
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "经度",
+                            label: "经度",
+                            visible: false,
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "纬度",
+                            label: "纬度",
+                            visible: false,
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "建校时",
+                            label: "建校时间",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "招生办",
+                            label: "招生办电话",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "f985",
+                            label: "985高校",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "f211",
+                            label: "211高校",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "双一流",
+                            label: "双一流高校",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "占地面_",
+                            label: "占地面积",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }, {
+                            fieldName: "总热度",
+                            label: "搜索热度",
+                            format: {
+                                places: 0,
+                                digitSeparator: true
+                            }
+                        }]
+                    }, {
+                        type: "media",
+                        mediaInfos: [
+                            {
+                                title: "",
+                                type: "image",
+                                caption: "<b>学校校徽</b>",
+                                value: {
+                                    sourceURL: "{logo_url}"
+                                }
+                            }
+                        ]
+                    },]
+                };
+                var areatemplate = {
+                    title: "",
+                    content: [
+                        {
+                            type: "media",
+                            mediaInfos: [
+                                {
+                                    title: "<b>2017-2019{name}理科一批省控线</b>",
+                                    type: "line-chart",
+                                    caption: "",
+                                    value: {
+                                        fields: ["理2017一批", "理2018一批", "理2019一批"],
+                                        normalizeField: "2017理科一批,2018理科一批,2019理科一批",
+                                        tooltipField: "2017理科一批,2018理科一批,2019理科一批"
+
+                                    }
+
+                                }, {
+                                    title: "<b>2017-2019{name}理科二批省控线</b>",
+                                    type: "line-chart",
+                                    caption: "",
+                                    value: {
+                                        fields: ["理2017二批", "理2018二批", "理2019二批"],
+                                        normalizeField: ["2017理科二批", "2018理科二批", "2019理科二批"],
+                                        tooltipField: ["2017理科二批", "2018理科二批", "2019理科二批"]
+
+                                    }
+                                }, {
+                                    title: "<b>2017-2019{name}文科一批省控线</b>",
+                                    type: "line-chart",
+                                    caption: "",
+                                    value: {
+                                        fields: ["文2017一批", "文2018一批", "文2019一批"],
+                                        normalizeField: ["2017文一批", "2018文科一批", "2019文科一批"],
+                                        tooltipField: ["2017文科一批", "2018文科一批", "201文科一批"]
+
+                                    }
+                                }, {
+                                    title: "<b>2017-2019{name}文科二批省控线</b>",
+                                    type: "line-chart",
+                                    caption: "",
+                                    value: {
+                                        fields: ["文2017二批", "文2018二批", "文2019二批"],
+                                        normalizeField: ["2017文科二批", "2018文科二批", "2019文科二批"],
+                                        tooltipField: ["2017文科二批", "2018文科二批", "2019文科二批"]
+
+                                    }
+                                }]
+                        }
+                        /*{
+                            type:"attachments"
+                        }*/
+                    ]
+                };
+
+
+
+                var featurelayer1 = new FeatureLayer({
+                    url: "http://localhost:6080/arcgis/rest/services/Esri/Esri_1/FeatureServer/0",
+                    //renderer:renderer,
+                    outFields: ["*"],
+                    popupTemplate: template,
+                    visible: true,
+
+
+                });
+                var featurelayer2 = new FeatureLayer({
+                    url: "http://localhost:6080/arcgis/rest/services/Esri/Esri_final/FeatureServer/0",
+                    outFields: ["*"],
+                    popupTemplate: areatemplate,
+                    visible: true,
+
+                });
+                var featurelayer3 = new FeatureLayer({
+                    url: "http://localhost:6080/arcgis/rest/services/Esri/newbasemap/FeatureServer/1",
+                });
+                var graghicslayer = new GraphicsLayer();
+                var map = new Map({
+                    basemap: "dark-gray",
+                    slider: false,
+                    layers: [featurelayer3, featurelayer2, featurelayer1, graghicslayer]
+                });
+
+
+
+                var view = new MapView({
+                    container: "viewDiv",
+                    map: map,
+                    zoom: 5,
+                    //view:featurelayer2.popupTemplate2=false,
+                    center: [105.19628, 35.639441],
+
+                });
+                view.ui.empty("top-left");
+                //缩放原始图按钮
+                var homeBtn = new Home({
+                    view: view
+                });
+                view.ui.add(homeBtn, "bottom-right");
+
+
+                //点击图层显示popup
+                view.on("click", function (evt) {
+                    view.hitTest(evt).then(function (response) {
+                        var result = response.result[0];
+                        if (result && result.graphic) {
+                            console.log(result);
+                            var graphic = result.graphic;
+                            graphic.symbol = {
+                                type: "symbol-fill",
+                                color: "red",
+                                outline: {
+                                    color: [128, 128, 128, 0.5],
+                                    width: "0.5px"
+                                }
+                            };
+                            view.graphics.removeAll();
+                            view.graphics.add(graphic)
+                        }
+                    });
+                })
+                //为popup添加链接
+                view.when(function () {
+                    var popup = view.popup;
+                    popup.viewModel.on("trigger-action", function (event) {
+                        if (event.action.id === "find-detalis") {
+                            var attributes = popup.viewModel.selectedFeature.attributes;
+                            var info = attributes.学校官;
+                            console.log(info);
+                            if (info !== null) {
+                                window.open(info.trim());
+                            } else {
+                                window.open("https://www.baidu.com/s?wd=" +
+                                    attributes.学校名)
+                            }
+                        }
+                    });
+                });
+                //popup中的测距
+
+                var lon2, lat2;
+
+                function getLocation() {
+                    var options = {
+                        enableHighAccuracy: true,
+                        maximumAge: 1000
+                    }
+                    if (navigator.geolocation) {
+                        //浏览器支持geolocation
+                        // alert("浏览器支持geolocation");
+                        navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+
+                    } else {
+                        //浏览器不支持geolocation
+                        alert("浏览器不支持geolocation");
+                    }
+                };
+                function onSuccess(pos) {
+                    console.log("经度：" + pos.coords.longitude +
+                        "纬度：" + pos.coords.latitude)
+                    lon2 = pos.coords.longitude;
+                    lat2 = pos.coords.latitude;
+                };
+
+                function onError(error) {
+                    switch (error.code) {
+
+                        case 1:
+                            alert("位置服务被拒绝");
+                            break;
+
+                        case 2:
+                            alert("暂时获取不到位置信息");
+                            break;
+
+                        case 3:
+                            alert("获取信息超时");
+                            break;
+
+                        case 4:
+                            alert("未知错误");
+                            break;
+                    }
+
+                }
+                getLocation();//获取经纬度
+
+
+
+                view.when(function () {
+                    var popup = view.popup;
+                    popup.viewModel.on("trigger-action", function (event) {
+                        if (event.action.id === "measuredistance") {
+
+                            var attributes = popup.viewModel.selectedFeature.attributes;
+                            lon = attributes.经度;
+                            lat = attributes.纬度;
+
+                            //计算距离
+                            function Rad(d) {
+                                return d * Math.PI / 180.0;
+                            }
+                            function GetDistance(lat1, lng1, lat2, lng2) {
+
+                                var radLat1 = Rad(lat1);
+                                var radLat2 = Rad(lat2);
+                                var a = radLat1 - radLat2;
+                                var b = Rad(lng1) - Rad(lng2);
+                                var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+                                    Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+                                s = s * 6378.137;// EARTH_RADIUS;
+                                s = Math.round(s * 10000) / 10000; //输出为公里
+                                s = s.toFixed(0);
+                                return s;
+                            }
+
+                            juli = GetDistance(lat, lon, lat2, lon2);//这里传入参数将两点的距离存储到juli中
+                            console.log(juli);
+
+                            //划线
+                            var point = {
+                                type: "point",
+                                longitude: lon2,
+                                latitude: lat2
+                            };
+                            var markerSymbol = {
+                                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                                color: [226, 119, 40],
+                                outline: {
+                                    // autocasts as new SimpleLineSymbol()
+                                    color: [255, 255, 255],
+                                    width: 2
+                                }
+                            };
+
+                            // Create a graphic and add the geometry and symbol to it
+                            var pointGraphic = new Graphic({
+                                geometry: point,
+                                symbol: markerSymbol
+                            });
+
+
+
+
+                            var polyline = {
+                                type: "polyline",
+                                paths: [[lon2, lat2], [lon, lat]],
+                                spatialReference: { wkid: 4326 }
+                            };
+                            var lineSymbol = {
+                                type: "simple-line",
+                                color: [226, 119, 40],
+                                width: 4
+                            };
+
+                            var polylineGraphic = new Graphic({
+                                geometry: polyline,
+                                symbol: lineSymbol
+                            });
+
+                            console.log(point, polyline);
+                            view.graphics.addMany([polylineGraphic, pointGraphic]);
+                            popup.content =
+                                "<div style='background-color:DarkGray;color:white'>" + "距离您约"
+                                + juli +
+                                " 公里.</div>";
+
+                            $(".esri-popup__button").click(function () {
+                                view.graphics.remove(polylineGraphic);
+                            })
+
+
+
+
+                        }
+                    });
+                });
+
+
+
+
+
+                //搜索窗口
+                var search = new Search({
+                    view: view,
+                    sources: [{
+                        layer: featurelayer1,
+                        searchFields: ["学校名"],
+                        suggestionTemplate: "{学校名}",
+                        displayFields: "DISTRICTID",
+                        exactMatch: false,
+                        outFields: ["*"],
+                        placeholder: "eg:成都理工大学",
+
+
+                    }],
+                    includeDefaultSources: false,
+                    locationEnabled: false
+                });
+                view.ui.add(
+                    search, {
+                        position: "top-left",
+                        index: 5
+                    }
+                );
+
+
+
+
+
+
+
+                //显示省控线
+
+                view.when().then(function () {
+                    const graphic = {
+                        popupTemplate: {
+                            content: "移动鼠标显示各省分数线"
+                        }
+                    };
+                    const feature = new Feature({
+                        graphic: graphic,
+                        view: view,
+                        spatialReference: view.spatialReference,
+                        VisibleContentElements: {
+                            fields: false,
+                            text: false,
+                        },
+                    });
+
+                    view.ui.add(feature, "bottom-left");
+                    view.whenLayerView(featurelayer2).then(function (layerView) {
+                        let highlight;
+                        view.on("pointer-move", function (event) {
+                            view.hitTest(event).then(function (event) {
+                                let results = event.results.filter(function (result) {
+                                    return result.graphic.layer.popupTemplate;
+                                });
+                                let result = results[0];
+                                highlight && highlight.remove();
+                                if (result) {
+                                    feature.graphic = result.graphic;
+                                    highlight = layerView.highlight(result.graphic);
+                                } else {
+                                    feature.graphic = graphic;
+                                }
+                            });
+                        });
+                    });
+                });
+
+                //按条件查学校
+                var popupTemplate = {
+                    title: "{城市},{隶属},{学校名}",
+                    fieldInfos: [
+                        {
+                            fieldName: "学校名",
+                            label: "学校名称",
+                            format: {
+                                places: 0,
+                                digitSeperator: true
+                            }
+                        },
+                        {
+                            fieldName: "隶属",
+                            label: "隶属",
+                            format: {
+                                places: 0,
+                                digitSeperator: true
+                            }
+                        },
+                        {
+                            fieldName: "类别",
+                            label: "类别",
+                            format: {
+                                places: 0,
+                                digitSeperator: true
+                            }
+                        },
+                        {
+                            fieldName: "f985",
+                            label: "是否985",
+                            format: {
+                                places: 0,
+                                digitSeperator: true
+                            }
+                        },
+                        {
+                            fieldName: "f211",
+                            label: "是否211",
+                            format: {
+                                places: 0,
+                                digitSeperator: true
+                            }
+                        },
+                        {
+                            fieldName: "双一流",
+                            label: "是否双一流",
+                            format: {
+                                places: 0,
+                                digitSeperator: true
+                            }
+                        }
+                    ],
+                    content:
+                        "<b>学校名称:" +
+                        "</b> {学校名} " +
+                        "<br><b>隶属:</b> {隶属}" +
+                        "<br><b>类别:</b> {类别}" +
+                        "<br><b>是否985:</b> {f985}" +
+                        "<br><b>是否211:</b> {f211}" +
+                        "<br><b>是否双一流:</b> {双一流}"
+                }
+                var qTask = new QueryTask({
+                    url: "http://localhost:6080/arcgis/rest/services/Esri/Esri_1/FeatureServer/0"
+                });
+
+                var params = new Query({
+                    returnGeometry: true,
+                    outFields: ["*"]
+                });
+
+                var categoryValue = document.getElementById("category");
+                var nameValue = document.getElementById("name");
+
+                var Querybtn = document.getElementById("Querybtn");
+                Querybtn.addEventListener("click", function () {
+                    if (nameValue.value == "") {
+                        alert("省份名称不能未空");
+                    }
+                    else {
+                        doQuery();
+                        //function4.style.display = "none"
+                    }
+                });
+
+                //function doQuery()
+                var markerSymbol = {
+                    type: "simple-marker",
+                    color: [255, 0, 0],
+                    size: "8px",
+                    outline: {
+                        color: [255, 255, 255],
+                        width: 2
+                    }
+                }
+                function doQuery() {
+                    view.graphics.removeAll();
+                    if (categoryValue.value == "普通院校") {
+                        categoryValue.value = "f985='否' AND f211='否' AND 双一流= '否' AND";
+                    }
+                    params.where = categoryValue.value + " 省份 = '" + nameValue.value + "'";
+                    qTask.execute(params).then(getResults).catch(promiseRejeced);
+
+                }
+
+                function getResults(response) {
+                    var peakResults = response.features.map(function (feature) {
+                        feature.symbol = markerSymbol;
+                        feature.popupTemplate = popupTemplate;
+                        return feature;
+                    })
+                    view.graphics.addMany(peakResults);
+                    view.goTo(peakResults).then(function () {
+                        view.popup.open({
+                            features: peakResults,
+                            featureMenuOpen: true,
+                            updateLocationEnabled: true
+                        });
+                    });
+                    document.getElementById("printResults").innerHTML = peakResults.length + "个结果被找到!";
+                }
+                function promiseRejeced(error) {
+                    console.error("Promise rejected:", error.message)
+                }
+                $("#school").click(function () {
+                    view.graphics.removeAll();
+                })
+
+
+                //按范围筛选学校
+                var identifyTask, params;
+                var simplemarkerSymbol = {
+                    type: "simple-marker",
+                    color: [255, 0, 0],
+                    size: "8px",
+                    outline: {
+                        color: [255, 255, 255],
+                        width: 2
+                    }
+                }
+                var polySym = {
+                    type: "simple-fill", // autocasts as new SimpleFillSymbol()
+                    color: [140, 140, 222, 0.5],
+                    outline: {
+                        color: [0, 0, 0, 0.5],
+                        width: 2
+                    }
+                };
+
+
+                var soilURL = "	http://localhost:6080/arcgis/rest/services/Esri/Esri_1/MapServer";
+                var sketch = new Sketch({
+                    layer: graghicslayer,
+                    view: view,
+                    container: function5
+                });
+                var tb1Btn = document.getElementById("tb1");
+                view.ui.add(sketch, "top-center");
+                view.when(function () {
+                    // executeIdentifyTask() is called each time the view is clicked
+                    //view.on("click",executeIdentifyTask);
+                    sketch.on("create", function (event) {
+                        if (event.state === "complete") {
+                            identifyTask = new IdentifyTask(soilURL);
+                            params = new IdentifyParameters();
+                            params.tolerance = 1;
+                            params.layerIds = [0];
+                            params.layerOption = "visible";
+                            params.width = view.width;
+                            params.height = view.height;
+                            // Set the geometry to the location of the view click
+
+                            var dis = document.getElementById("distance").value;//距离
+                            var buffer = geometryEngine.geodesicBuffer(event.graphic.geometry, dis, "kilometers");
+                            graghicslayer.add(
+                                new Graphic({
+                                    geometry: buffer,
+                                    symbol: polySym
+                                })
+                            );
+                            params.geometry = buffer;
+
+
+                            params.mapExtent = view.extent;
+                            document.getElementById("viewDiv").style.cursor = "wait";
+
+                            // This function returns a promise that resolves to an array of features
+                            // A custom popupTemplate is set for each feature based on the layer it
+                            // originates from
+
+                            identifyTask
+                                .execute(params)
+                                .then(function (response) {
+                                    var results = response.results;
+                                    return results.map(function (result) {
+                                        var feature = result.feature;
+                                        feature.symbol = simplemarkerSymbol;
+                                        var layerName = result.layerName;
+                                        feature.attributes.layerName = layerName;
+                                        return feature;
+                                    });
+                                })
+                                .then(showResults); // Send the array of features to showPopup()
+
+                            // Shows the results of the Identify in a popup once the promise is resolved
+                            function showResults(response) {
+                                if (response.length > 0) {
+                                    var htmls = ""
+                                    response.forEach(element => {
+                                        htmls = htmls + "<tr><td>" + element.attributes["学校名"] + "</td>";
+                                        htmls = htmls + "<td>" + element.attributes["省份"] + "</td>";
+                                        htmls = htmls + "<td>" + element.attributes["城市"] + "</td>";
+                                        htmls = htmls + "<td>" + element.attributes["总热度"] + "</td>";
+                                        htmls = htmls + "<td>" + element.attributes["f985"] + "</td>";
+                                        htmls = htmls + "<td>" + element.attributes["f211"] + "</td>";
+                                        htmls = htmls + "<td>" + element.attributes["双一流"] + "</td>";
+                                        htmls = htmls + "<td>" + element.attributes["地址"] + "</td></tr>";
+                                    });
+                                    document.getElementById("tbody").innerHTML = htmls;
+                                }
+
+                                var ss = document.getElementById("TableDIV")
+                                ss.style.display = "block";
+                                var textinput = document.getElementById("distance");
+                                textinput.addEventListener("focus", function () {
+                                    if (ss.style.display == "block") {
+                                        ss.style.display = "none";
+                                        graghicslayer.removeAll();
+                                        document.getElementById("tbody").innerHTML = "";
+                                    }
+                                })
+                                document.getElementById("viewDiv").style.cursor = "auto";
+                            }
+
+                        }
+
+                    });
+                });
+
+                //渲染
+
+
+
+
+
+
+
+
+
+
+
+
+                //div显隐
+                $(document).ready(function (e) {
+                    $("#area").click(function () {
+                        if (!$("#function1").is(":visible")) {
+                            $("#function1").show();
+                            $(this).val("隐藏");
+                        } else {
+                            $("#function1").hide();
+                            $(this).val("显示");
+                        }
+                    });
+
+                })
+                /*
+                    $(document).ready(function (e) {
+                        $("#college").click(function () {
+                            if (!$("#CollegeLineDIV").is(":visible")) {
+                                $("#CollegeLineDIV").show();
+                                $(this).val("隐藏");
+                            } else {
+                                $("#CollegeLineDIV").hide();
+                                $(this).val("显示");
+                            }
+                        });
+
+                    })
+                    */
+                //$(document).ready(function (e) {
+                //    $("#subject").click(function () {
+                //        if (!$("#function3").is(":visible")) {
+                //            $("#function3").show();
+                //            $(this).val("隐藏");
+                //        } else {
+                //            $("#function3").hide();
+                //            $(this).val("显示");
+                //        }
+                //    });
+
+                //})
+
+                $(document).ready(function (e) {
+                    $("#school").click(function () {
+                        if (!$("#function4").is(":visible")) {
+                            $("#function4").show();
+                            $(this).val("隐藏");
+                        } else {
+                            $("#function4").hide();
+                            $(this).val("显示");
+                        }
+                    });
+
+                })
+
+                $(document).ready(function (e) {
+                    $("#school_2").click(function () {
+                        if (!$("#function5").is(":visible")) {
+                            $("#function5").show();
+                            $(this).val("隐藏");
+                        } else {
+                            $("#function5").hide();
+                            $(this).val("显示");
+                        }
+                    });
+
+                })
+                $(document).ready(function (e) {
+                    $("#aboutus").click(function () {
+                        if (!$("#function6").is(":visible")) {
+                            $("#function6").show();
+                            $(this).val("隐藏");
+                        } else {
+                            $("#function6").hide();
+                            $(this).val("显示");
+                        }
+                    });
+
+                })
+            
+
+                //大学分数线
+                getValue();
+                //各省份招生批次
+                var y2018 = ["全部", "本科提前批", "本科一批", "本科二批", "专科提前批", "专科批", "国家专项计划本科批", "地方专项计划本科批"];
+                var y2017 = ["全部", "本科提前批", "本科批", "本科一批", "本科二批", "本科三批", "专科提前批", "专科批", "无批次", "国家专项计划本科批", "地方专项计划本科批"];
+                var y2016 = ["全部", "本科提前批", "本科批", "本科一批", "本科二批", "本科三批", "专科批"];
+
+                var Years = [y2018, y2017, y2016];
+                var Yearss = ["2018", "2017", "2016"];
+
+                //函数_选中三种查询的时候，能够按照不同的省份设置批次
+
+                function SetDifferentType(HTML_ProvinceName_Selected) {
+
+                    //遍历找到Province_Name对应的下标
+                    for (var i = 0; i <= Years.length; i++) {
+                        if (Yearss[i] == HTML_ProvinceName_Selected) {
+
+                            $("#more-search2_College").empty();
+                            for (var j = 0; j < Years[i].length; j++) {
+                                $("#more-search2_College").append("<span class='2333'>" + Years[i][j] + "</span>");
+                            }
+                            var Tempss = document.querySelectorAll(".more-search2_College span")
+                            $('.2333').on('click', function () { 		//绑定事件
+                                for (var i = 0; i < Tempss.length; i++) {
+                                    Tempss[i].className = ''
+                                }
+                                this.className = "Active_College"
+                                getValue();
+
+                            });
+
+                        }
+                    }
+                }
+
+                //选择省份more-search
+                var Province = document.querySelectorAll('.more-search_College span')
+                for (var i = 0; i < Province.length; i++) {
+
+                    Province[i].onclick = function () {
+                        for (var j = 0; j < Province.length; j++) {
+                            Province[j].className = ''
+                            this.className = "Active_College"
+
+                        }
+                        getValue()
+                    }
+                }
+                //选择省份more-search
+                var Pici = document.querySelectorAll('.more-search2_College span')
+                for (var i = 0; i < Pici.length; i++) {
+
+                    Pici[i].onclick = function () {
+                        for (var j = 0; j < Pici.length; j++) {
+                            Pici[j].className = ''
+                            this.className = "Active_College"
+
+                        }
+                        getValue()
+                    }
+                }
+
+                //选择考生类别more-search3
+                var Stype = document.querySelectorAll('.more-search3_College span')
+                for (var i = 0; i < Stype.length; i++) {
+                    Stype[i].onclick = function () {
+                        for (var j = 0; j < Stype.length; j++) {
+                            Stype[j].className = ''
+                            this.className = "Active_College"
+                        }
+                        getValue()
+                    }
+                }
+                //选择年份more-search4
+                var Year = document.querySelectorAll('.more-search4_College span')
+                for (var i = 0; i < Year.length; i++) {
+                    Year[i].onclick = function () {
+                        for (var j = 0; j < Year.length; j++) {
+                            Year[j].className = ''
+                            this.className = "Active_College"
+                        }
+                        SetDifferentType(this.innerHTML)
+                        console.log(this.innerHTML)
+                        document.getElementById("more-search2_College").childNodes[0].className = "Active_College"
+                        getValue()
+                    }
+                }
+                var CollegeLineBtn = document.getElementById("college");
+                var CollegeLineDIV = document.getElementById("CollegeLineDIV");
+                var tableDiv = document.getElementById("TableLineDIV")
+                CollegeLineBtn.addEventListener("click", function () {
+                    if (CollegeLineDIV.style.display == "none") {
+                        CollegeLineDIV.style.display = "block"
+                        tableDiv.style.display = "block"
+
+                    } else {
+                        CollegeLineDIV.style.display = "none"
+                        tableDiv.style.display = "none"
+                    }
+                })
+                //获得所有已选择的值
+                function getValue() {
+                    var temp = []//用来存放所有值的数组
+
+                    //从点击栏中，选出所有有颜色的Dom(即为选中的Dom)，将他们的值依次存入数组
+                    var value = document.querySelectorAll('.Active_College');
+                    for (var i = 0; i < value.length; i++) {
+                        temp[i] = value[i].innerHTML;
+                        console.log(temp[i])
+                    }
+                    console.log("*********")
+                    var htmls = ""
+                    htmls += "<td width='150px'>学校名称</td>"
+                    htmls += "<td width='100px'>招生地址</td>"
+                    htmls += "<td width='100px'>考生类别</td>"
+                    htmls += "<td width='100px'>年份</td>"
+                    htmls += "<td width='150px'>录取批次</td>"
+                    htmls += "<td width='150px'>平均分</td>"
+                    htmls += "<td width='150px'>最低分</td>"
+                    htmls += "<td width='150px'>省控线</td>"
+
+                    document.getElementById("tabTh_1").innerHTML = htmls;
+                    Transport_UniversityLine(temp);
+                }
+
+
+            
+
+
+        //查专业分数线
+            getValue1();
+            //各省份招生批次
+            var y2017 = ["全部", "本科提前批", "本科批", "本科一批", "本科二批", "本科三批", "专科提前批", "专科批", "无批次", "国家专项计划本科批", "地方专项计划本科批"];
+            var y2016 = ["全部", "本科提前批", "本科批", "本科一批", "本科二批", "本科三批", "专科批"];
+
+            var Years = [y2017, y2016];
+            var Yearss = ["2017", "2016"];
+
+            //函数_选中三种查询的时候，能够按照不同的省份设置批次
+
+            function SetDifferentType1(HTML_ProvinceName_Selected) {
+
+                //遍历找到Province_Name对应的下标
+                for (var i = 0; i <= Years.length; i++) {
+                    if (Yearss[i] == HTML_ProvinceName_Selected) {
+
+                        $("#more-search2_Special").empty();
+                        for (var j = 0; j < Years[i].length; j++) {
+                            $("#more-search2_Special").append("<span class='2333_1'>" + Years[i][j] + "</span>");
+                        }
+                        var Tempss = document.querySelectorAll(".more-search2_Special span")
+                        $('.2333_1').on('click', function () { 		//绑定事件
+                            for (var i = 0; i < Tempss.length; i++) {
+                                Tempss[i].className = ''
+                            }
+                            this.className = "Active_Special"
+                            getValue1();
+
+                        });
+
+                    }
+                }
+            }
+
+            //选择省份more-search
+            var Province2 = document.querySelectorAll('.more-search_Special span')
+            for (var i = 0; i < Province2.length; i++) {
+
+                Province2[i].onclick = function () {
+                    for (var j = 0; j < Province2.length; j++) {
+                        Province2[j].className = ''
+                        this.className = "Active_Special"
+
+                    }
+                    getValue1()
+                }
+            }
+            //选择省份more-search
+            var Pici2 = document.querySelectorAll('.more-search2_Special span')
+            for (var i = 0; i < Pici2.length; i++) {
+
+                Pici2[i].onclick = function () {
+                    for (var j = 0; j < Pici2.length; j++) {
+                        Pici2[j].className = ''
+                        this.className = "Active_Special"
+
+                    }
+                    getValue1()
+                }
+            }
+
+            //选择考生类别more-search3
+            var Stype2 = document.querySelectorAll('.more-search3_Special span')
+            for (var i = 0; i < Stype2.length; i++) {
+                Stype2[i].onclick = function () {
+                    for (var j = 0; j < Stype2.length; j++) {
+                        Stype2[j].className = ''
+                        this.className = "Active_Special"
+                    }
+                    getValue1()
+                }
+            }
+            //选择年份more-search4
+            var Year2 = document.querySelectorAll('.more-search4_Special span')
+            for (var i = 0; i < Year2.length; i++) {
+                Year2[i].onclick = function () {
+                    for (var j = 0; j < Year2.length; j++) {
+                        Year2[j].className = ''
+                        this.className = "Active_Special"
+                    }
+                    SetDifferentType1(this.innerHTML)
+                    console.log(this.innerHTML)
+                    getValue1()
+                }
+            }
+            var SpecialLineBtn = document.getElementById("subject");
+            var SpecialLineDIV = document.getElementById("SpecialLineDIV");
+            var tabDIV2 = document.getElementById("TableDIV2");
+            SpecialLineBtn.addEventListener("click", function () {
+                if (SpecialLineDIV.style.display == "none") {
+                    SpecialLineDIV.style.display = "block"
+                    tabDIV2.style.display = "block"
+                    //执行剩下的操作
+
+                } else {
+                    SpecialLineDIV.style.display = "none"
+                    tabDIV2.style.display = "none"
+                }
+            })
+
+
+
+            //获得所有已选择的值
+            function getValue1() {
+                var temp = []//用来存放所有值的数组
+                //从点击栏中，选出所有有颜色的Dom(即为选中的Dom)，将他们的值依次存入数组
+                var value = document.querySelectorAll('.Active_Special');
+                for (var i = 0; i < value.length; i++) {
+                    temp[i] = value[i].innerHTML;
+                    console.log(temp[i])
+                }
+                console.log("*********")
+                var htmls = ""
+                htmls += "<td width='100px'>学校名称</td>"
+                htmls += "<td width='100px'>专业名称</td>"
+                htmls += "<td width='100px'>招生地址</td>"
+                htmls += "<td width='100px'>考生类别</td>"
+                htmls += "<td width='100px'>年份</td>"
+                htmls += "<td width='100px'>录取批次</td>"
+                htmls += "<td width='100px'>平均分</td>"
+                htmls += "<td width='100px'>最低分</td>"
+
+                document.getElementById("tabTh2").innerHTML = htmls;
+                Transport_SpecialLine(temp);
+            }
+    });
+    </script>
+</head>
+<body>
+    <div style="overflow:auto;width:920px;height:400px;" id="TableDIV">
+        <table id="tab_Test0" border="1" width='900'>
+            <thead>
+                <tr class='tabTh'>
+                    <td width="100px">学校名</td>
+                    <td width="100px">省份</td>
+                    <td width="100px">城市</td>
+                    <td width="100px">热度</td>
+                    <td width="100px">985</td>
+                    <td width="100px">211</td>
+                    <td width="100px">双一流</td>
+                    <td width="200px">地址</td>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+        <div id="div8" style="clear:both;"></div>
+    </div>
+
+
+    <div id="viewDiv">
+        <div id="d1" title="关于我们">
+            <button id="aboutus"></button>
+        </div>
+        <div id="d2">
+            <h5>
+                <button id="area">
+                    所属地区
+                </button>
+            </h5>
+            <h5>
+                <button id="college">
+                    大学分数线
+                </button>
+            </h5>
+            <h5>
+                <button id="subject">
+                    专业分数线
+                </button>
+            </h5>
+            <h5>
+                <button id="school">
+                    条件筛选高校
+                </button>
+            </h5>
+            <h5>
+                <button id="school_2">
+                    范围筛选高校
+                </button>
+            </h5>
+
+        </div>
+        <div id="function1">
+
+            选择生源地：
+            <select id="areaname">
+                <option value="beijing">北京</option>
+                <option value="tianjin">天津</option>
+                <option value="hebei">河北</option>
+                <option value="heinan">河南</option>
+                <option value="shandong">山东</option>
+                <option value="shanxi">山西</option>
+                <option value="shanxi2">陕西</option>
+                <option value="neimenggu">内蒙古</option>
+                <option value="liaoning">辽宁</option>
+                <option value="jilin">吉林</option>
+                <option value="heilongjiang">黑龙江</option>
+                <option value="shanghai">上海</option>
+                <option value="jiangsu">江苏</option>
+                <option value="anhui">安徽</option>
+                <option value="jiangxi">江西</option>
+                <option value="hubei">湖北</option>
+                <option value="hunan">湖南</option>
+                <option value="chongqing">重庆</option>
+                <option value="sichuan" selected="selected">四川</option>
+                <option value="guizhou">贵州</option>
+                <option value="yunnan">云南</option>
+                <option value="guangdong">广东</option>
+                <option value="guangxi">广西</option>
+                <option value="fujian">福建</option>
+                <option value="gansu">甘肃</option>
+                <option value="ningxia">宁夏</option>
+                <option value="xizang">西藏</option>
+                <option value="hainan">海南</option>
+                <option value="zhejiang">浙江</option>
+                <option value="qinghai">青海</option>
+            </select><br>
+            科类:
+            <form>
+                <input type="radio" name="kelei" id="like" checked="checked" /><label for="like">理科</label>
+                <input type="radio" name="kelei" id="wenke" /><label for="wenke">文科</label>
+            </form>
+
+        </div>
+
+        <div>
+            <div class="CollegeLineDIV" id="CollegeLineDIV">
+                <ul id="condition">
+                    <li class="listSpan">
+                        <span class="list-key">所属地区 </span>
+                        <div class="more-search_College">
+                            <span class="">北京</span>
+                            <span class="">天津</span>
+                            <span class="">河北</span>
+                            <span class="">河南</span>
+                            <span class="">山东</span>
+                            <span class="">山西</span>
+                            <span class="">陕西</span>
+                            <span class="">内蒙古</span>
+                            <span class="">辽宁</span>
+                            <span class="">吉林</span>
+                            <span class="">黑龙江</span>
+                            <br>
+                            <span class="">上海</span>
+                            <span class="">江苏</span>
+                            <span class="">安徽</span>
+                            <span class="">江西</span>
+                            <span class="">湖北</span>
+                            <span class="">湖南</span>
+                            <span class="">重庆</span>
+                            <span class="Active_College">四川</span>
+                            <span class="">贵州</span>
+                            <span class="">云南</span>
+                            <span class="">广东</span>
+                            <span class="">广西</span>
+                            <br>
+                            <span class="">福建</span>
+                            <span class="">甘肃</span>
+                            <span class="">宁夏</span>
+                            <span class="">新疆</span>
+                            <span class="">西藏</span>
+                            <span class="">海南</span>
+                            <span class="">浙江</span>
+                            <span class="">青海</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="list-key">录取批次 </span>
+                        <div class="more-search2_College" id="more-search2_College">
+                            <span class="Active_College">全部</span>
+                            <span class="">本科提前</span>
+                            <span class="">本科一批</span>
+                            <span class="">本科二批</span>
+                            <span class="">专科提前批</span>
+                            <span class="">专科批</span>
+                            <span class="">国家专项计划本科批</span>
+                            <span class="">地方专项计划本科批</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="list-key">考生类别</span>
+                        <div class="more-search3_College">
+                            <span class="Active_College">全部</span>
+                            <span class="">文科</span>
+                            <span class="">理科</span>
+                            <span class="">综合</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="list-key">录取年份</span>
+                        <div class="more-search4_College">
+                            <span class="Active_College">2018</span>
+                            <span class="">2017</span>
+                            <span class="">2016</span>
+
+                        </div>
+                    </li>
+                </ul>
+                <div id="SchoolSearchDIV">
+                    <!--大学搜索框-->
+                    <input type="text" placeholder="请输入大学名称" name="SchoolName" id="SchoolName">
+                    <input type="button" value="查询" onclick="Transport_QueryUniversityByName()">
+                </div>
+            </div>
+        </div>
+        <div id="TableLineDIV">
+            <table id="tab_Test1" width='900' cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr class='tabTh_1' id="tabTh_1"></tr>
+                </thead>
+                <tbody id="tbody1"></tbody>
+            </table>
+        </div>
+
+        <div>
+            <div class="SpecialLineDIV" id="SpecialLineDIV">
+                <ul id="condition">
+                    <li class="listSpan">
+                        <span class="list-key">所属地区 </span>
+                        <div class="more-search_Special">
+                            <span class="">北京</span>
+                            <span class="">天津</span>
+                            <span class="">河北</span>
+                            <span class="">河南</span>
+                            <span class="">山东</span>
+                            <span class="">山西</span>
+                            <span class="">陕西</span>
+                            <span class="">内蒙古</span>
+                            <span class="">辽宁</span>
+                            <span class="">吉林</span>
+                            <span class="">黑龙江</span>
+                            <br>
+                            <span class="">上海</span>
+                            <span class="">江苏</span>
+                            <span class="">安徽</span>
+                            <span class="">江西</span>
+                            <span class="">湖北</span>
+                            <span class="">湖南</span>
+                            <span class="">重庆</span>
+                            <span class="Active_Special">四川</span>
+                            <span class="">贵州</span>
+                            <span class="">云南</span>
+                            <span class="">广东</span>
+                            <span class="">广西</span>
+                            <br>
+                            <span class="">福建</span>
+                            <span class="">甘肃</span>
+                            <span class="">宁夏</span>
+                            <span class="">新疆</span>
+                            <span class="">西藏</span>
+                            <span class="">海南</span>
+                            <span class="">浙江</span>
+                            <span class="">青海</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="list-key">录取批次 </span>
+                        <div class="more-search2_Special" id="more-search2_Special">
+                            <span class="Active_Special">全部</span>
+                            <span class="">本科提前</span>
+                            <span class="">本科一批</span>
+                            <span class="">本科二批</span>
+                            <span class="">专科提前批</span>
+                            <span class="">专科批</span>
+                            <span class="">国家专项计划本科批</span>
+                            <span class="">地方专项计划本科批</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="list-key">考生类别</span>
+                        <div class="more-search3_Special">
+                            <span class="Active_Special">全部</span>
+                            <span class="">文科</span>
+                            <span class="">理科</span>
+                            <span class="">综合</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="list-key">录取年份</span>
+                        <div class="more-search4_Special">
+                            <span class="Active_Special">2017</span>
+                            <span class="">2016</span>
+
+                        </div>
+                    </li>
+                </ul>
+                <div id="SpecialSearchDIV">
+                    <!--大学搜索框-->
+                    <input type="text" placeholder="请输入专业名称"  name="SpecialName" id="SpecialName">
+                    <input type="button" value="查询" onclick="Transport_QuerySpecialLineByName()">
+                </div>
+            </div>
+        </div>
+        <div id="TableDIV2" style="display: none">
+            <table id="tab_Test2" width='900' cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr class='tabTh2' id="tabTh2"></tr>
+                </thead>
+                <tbody id="tbody2"></tbody>
+            </table>
+        </div>
+
+        <div id="function4">
+            <div class="inline">
+                <span>类别</span>
+                <select name="category" id="category" style="width: 90px;">
+                    <option value="f985='否' AND f211='否' AND 双一流= '否' AND">普通院校</option>
+                    <option value="f985 = '是' AND">985</option>
+                    <option value="f211 = '是' AND">211</option>
+                    <option value="双一流='是' AND">双一流</option>
+                </select>
+                <span>省份</span>
+                <select id="name" name="name">
+                    <option value="北京">北京</option>
+                    <option value="天津">天津</option>
+                    <option value="河北">河北</option>
+                    <option value="河南">河南</option>
+                    <option value="山东">山东</option>
+                    <option value="山西">山西</option>
+                    <option value="陕西">陕西</option>
+                    <option value="内蒙古">内蒙古</option>
+                    <option value="辽宁">辽宁</option>
+                    <option value="吉林">吉林</option>
+                    <option value="黑龙江">黑龙江</option>
+                    <option value="shanghai">上海</option>
+                    <option value="江苏">江苏</option>
+                    <option value="安徽">安徽</option>
+                    <option value="江西">江西</option>
+                    <option value="湖北">湖北</option>
+                    <option value="湖南">湖南</option>
+                    <option value="重庆">重庆</option>
+                    <option value="四川" selected="selected">四川</option>
+                    <option value="贵州">贵州</option>
+                    <option value="云南">云南</option>
+                    <option value="广东">广东</option>
+                    <option value="广西">广西</option>
+                    <option value="福建">福建</option>
+                    <option value="甘肃">甘肃</option>
+                    <option value="宁夏">宁夏</option>
+                    <option value="西藏">西藏</option>
+                    <option value="海南">海南</option>
+                    <option value="浙江">浙江</option>
+                    <option value="青海">青海</option>
+                </select>
+                <button type="submit" id="Querybtn" style="width:80px;height: 40px;">查询</button>
+                <p><span id="printResults"></span></p>
+            </div>
+        </div>
+        <div id="function5">
+            <div id="buffer">
+                <br><b>范围</b>
+                <input type="text" id="distance" value="500"><b>千米</b>
+            </div>
+        </div>
+        <div id="function6">
+            <ul style="opacity: 1;">
+                <li style="opacity: 1;">比赛名称:</listyle="opacity:>高校通-基于WebGIS的高校信息查询系统
+                <li>比赛组别:</li>GIS应用开发组（C组）
+                <li>团队介绍:</li>成都理工大学地球物理学院空间信息与数字技术专业
+                <li>团队成员:</li>黄俊入、魏文强、雷贵强、顾涛
+                <li>技术支持:</li>由ESRI提供技术支持：ArcGIS API For JavaScript|ArcGIS Desktop|ArcGIS Pro|ArcGIS For Server
+            </ul>
+        </div>
+        <div id="div7" style="clear:both;"></div>
+
+
+
+
+
+    </div>
+    <div id="div9" style="clear:both;"></div>
+
+
+
+</body>
+</html>
+
+
+

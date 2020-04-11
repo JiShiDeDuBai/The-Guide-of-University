@@ -1,0 +1,6 @@
+D:\比赛项目（ESRI）\高校通—全国高校信息查询系统\Entity\bin\Debug\Entity.dll
+D:\比赛项目（ESRI）\高校通—全国高校信息查询系统\Entity\bin\Debug\Entity.pdb
+D:\比赛项目（ESRI）\高校通—全国高校信息查询系统\Entity\obj\Debug\Entity.csprojAssemblyReference.cache
+D:\比赛项目（ESRI）\高校通—全国高校信息查询系统\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
+D:\比赛项目（ESRI）\高校通—全国高校信息查询系统\Entity\obj\Debug\Entity.dll
+D:\比赛项目（ESRI）\高校通—全国高校信息查询系统\Entity\obj\Debug\Entity.pdb

@@ -1,0 +1,290 @@
+﻿#viewDiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+#aboutus {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: 0;
+    width: 45px;
+    height: 45px;
+
+    background: url('aboutus.png') no-repeat;
+    background-size: 100%;
+    border: 2px solid gray;
+    border-radius: 50%;
+    background-color: gray;
+    overflow: hidden;
+}
+
+#d2 button {
+    position: absolute;
+    left: -130px;
+    transition: 0.3s;
+    padding: 15px;
+    width: 160px;
+    height: 50px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border: none;
+}
+
+    #d2 button:hover {
+        left: 0;
+    }
+
+#area {
+    top: 80px;
+    background-color: #4CAF50;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 0 5px 5px 0;
+}
+
+#college {
+    top: 150px;
+    background-color: #2196F3;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 0 5px 5px 0;
+}
+
+#subject {
+    top: 220px;
+    background-color: #f44336;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 0 5px 5px 0;
+}
+
+#school {
+    top: 290px;
+    background-color: coral;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 0 5px 5px 0;
+}
+
+#school_2 {
+    top: 360px;
+    background-color: peru;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 0 5px 5px 0;
+}
+
+#function1 {
+    width: 200px;
+    height: 80px;
+    position: absolute;
+    top: 220px;
+    right: 0;
+    display: none;
+    background-color: white;
+    box-shadow: 10px 10px 5px grey;
+    border: rgb(10, 7, 7);
+    border: 8px;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+#function2 {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 220px;
+    right: 0;
+    display: none;
+    background-color: white;
+    box-shadow: 10px 10px 5px grey;
+    border: rgb(10, 7, 7);
+    border: 8px;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+    #function2 input#mark {
+        width: 100px;
+        height: 30px;
+        border: 2px solid #7BA7AB;
+        outline: none;
+        background: #F9F0DA;
+        color: #9E9C9C;
+    }
+
+    #function2 button {
+        position: absolute;
+        bottom: 28px;
+        right: 76px;
+        width: 30px;
+        height: 34px;
+        border: 2px solid #7BA7AB;
+        outline: none;
+        background: #7BA7AB;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+       
+        background-image: url('search.jpg');
+        background-size: 30px 34px;
+    }
+
+        #function2 button:before {
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+
+#function3 {
+    position: absolute;
+    height: 80px;
+    width: 550px;
+    top: 220px;
+    right: 0;
+    font-size: 20px;
+    text-align: center;
+    border: 2px;
+    background-color: white;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 5px;
+    display: none;
+    padding: 10px;
+    margin: 5px;
+}
+
+#function4 {
+    position: absolute;
+    height: 85px;
+    width: 460px;
+    top: 220px;
+    right: 0;
+    font-size: 20px;
+    text-align: center;
+    border: 2px;
+    background-color: white;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 5px;
+    display: none;
+    padding: 10px;
+    margin: 5px;
+}
+
+#function5 {
+    position: absolute;
+    width: 350px;
+    height: 150px;
+    top: 220px;
+    right: 0;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 5px;
+    display: none;
+    padding: 10px;
+    margin: 5px;
+    border: 2px;
+    background-color: white;
+}
+
+#TableDIV {
+    position: fixed;
+    display: none;
+    top: 8%;
+    left: 10%;
+    border: black solid;
+    z-index: 999;
+}
+
+table {
+    empty-cells: show;
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+table {
+    font-family: 宋体;
+    font-size: 10pt;
+    border: 1px green solid;
+    background-color: white;
+}
+
+    table td {
+        height: 20px;
+        text-align: center;
+    }
+
+    table .tabTh {
+        color: green;
+        font-weight: bold;
+        background-color: #f1faee;
+    }
+
+#buffer {
+    position: absolute;
+    top: 70px;
+    width: auto;
+    height: auto;
+    max-height: 700px;
+    z-index: 3;
+    overflow: auto;
+}
+
+#function6 {
+    width: 780px;
+    height: 450px;
+    position: absolute;
+    top: 200px;
+    left: 300px;
+    display: block;
+   
+    background: url('background.jpg') no-repeat;
+    background-size: 100%;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 5px 5px 5px 5px;
+    z-index: 990;
+}
+
+.esri-search__container {
+    box-shadow: 10px 10px 5px grey;
+}
+
+.esri-icon-home {
+    
+    background-image: url('global.png');
+    background-size: 17px 17px;
+}
+
+.esri-locate {
+    position: absolute;
+    top: 50px;
+}
+
+.esri-feature {
+    box-shadow: 10px 10px 5px grey;
+}
+
+.esri-search {
+    position: relative;
+    left: 30px;
+}
+
+.esri-feature__size-container {
+    box-shadow: 10px 10px 5px grey;
+}
+
+.esri-ui-bottom-left {
+    position: inherit;
+    left: 30px;
+}
